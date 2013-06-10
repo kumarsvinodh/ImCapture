@@ -74,20 +74,6 @@ public class EmailComposer extends CordovaPlugin {
 			LOG.e("EmailComposer", "Error handling subject param: " + e.toString());
 		}
 
-		// setting body
-		try {
-			String body = parameters.getString("body");
-			if (body != null && body.length() > 0) {
-				if (isHTML) {
-					emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml(body));
-				} else {
-					emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
-				}
-			}
-		} catch (Exception e) {
-			LOG.e("EmailComposer", "Error handling body param: " + e.toString());
-		}
-
 		// setting TO recipients
 		try {
 			JSONArray toRecipients = parameters.getJSONArray("toRecipients");
@@ -137,14 +123,18 @@ public class EmailComposer extends CordovaPlugin {
 				ArrayList<Uri> uris = new ArrayList<Uri>();
 				//convert from paths to Android friendly Parcelable Uri's
 				for (int i=0; i<attachments.length(); i++) {
-					try {
-						File file = new File(attachments.getString(i));
-						//if (file.exists()) {
-							Uri uri = Uri.fromFile(file);
-							uris.add(uri);
-						//}
-					} catch (Exception e) {
-						LOG.e("EmailComposer", "Error adding an attachment: " + e.toString());
+					String path=attachments.getString(i);
+					if(path !=null&&path.indexOf("file://")!= -1){
+						String[] strings = path.split("file://");
+						try {
+							File file = new File(strings[1]);
+							if (file.exists()) {
+								Uri uri = Uri.fromFile(file);
+								uris.add(uri);
+							}
+						} catch (Exception e) {
+							LOG.e("EmailComposer", "Error adding an attachment: " + e.toString());
+						}
 					}
 				}
 				if (uris.size() > 0) {
@@ -153,6 +143,20 @@ public class EmailComposer extends CordovaPlugin {
 			}
 		} catch (Exception e) {
 			LOG.e("EmailComposer", "Error handling attachments param: " + e.toString());
+		}
+		
+		// setting body
+		try {
+			String body = parameters.getString("body");
+			if (body != null && body.length() > 0) {
+				if (isHTML) {
+					emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml(body));
+				} else {
+					emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, body);
+				}
+			}
+		} catch (Exception e) {
+			LOG.e("EmailComposer", "Error handling body param: " + e.toString());
 		}
 
 		this.cordova.startActivityForResult(this, emailIntent, 0);

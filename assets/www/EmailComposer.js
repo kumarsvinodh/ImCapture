@@ -35,7 +35,7 @@ EmailComposer.prototype.showEmailComposer = function(subject,body,toRecipients,c
         args.attachments = attachments;
 	
 	cordova.exec(function(args) {
-		 alert("mail sent");
+		 //alert("mail sent");
 	 },
 	 function(args) {
 		 alert(args);
