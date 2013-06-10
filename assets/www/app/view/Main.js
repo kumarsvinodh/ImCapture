@@ -34,7 +34,44 @@ Ext.define('ImCapture.view.Main', {
                         padding: 20,
 						handler: function(){
 							Ext.device.Camera.capture({
-							    success: function(image) {
+								source: 'camera',
+								destination: 'file',
+								//destination: 'data',
+					            success: function(image) {
+					                //this.fireEvent('change', this, url);
+					            	//imageView.setSrc(url);
+					            	var uri=false;
+					            	var subject="hi there";
+					            	var body="hello sir";
+					            	var toRecipients=['vinodh@vinodh.com'];
+					            	var ccRecipients=false;
+					            	var bccRecipients=false;
+					            	var isHtml=true;
+					            	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(){alert('file system success');},
+					            			function(){alert('file system fail');});
+					            	window.resolveLocalFileSystemURI(image, function(acuri){
+					            		alert('return url is '+acuri);
+					            		uri=acuri;
+window.plugins.emailComposer.showEmailComposer(subject,body,toRecipients,ccRecipients,bccRecipients,isHtml,[acuri]);
+					            		}, 
+					            			function(msg){alert('failed'+msg)});
+			/*		            	alert(image);
+					            	alert(uri);
+ */
+					            	/*Ext.define('ImCapture.view.PreviewImage', {
+					                    title: 'Test photo',
+					                    description: 'Testing a camera capture',    
+					                    src: image,
+					                    fullscreen: true
+					                });*/
+					            },
+					            failure: function() {
+					                Ext.Msg.alert('Error', 'There was an error when acquiring the picture.');
+					            },
+					            scope: this,
+
+								
+							   /* success: function(image) {
 							    	//var imageView = Ext.getCmp('capturedImage');
 							    	//window.open('mailto:vinodhskumar@gmail.com');
 							        //imageView.setSrc(image);
@@ -55,11 +92,10 @@ Ext.define('ImCapture.view.Main', {
 							    		 alert('Failed to send email');
 							    		 }
 							    		 );
-							    },
+							    },*/
 							    quality: 75,
 							    width: 200,
-							    height: 200,
-							    destination: 'data'
+							    height: 200
 							});
                         }
                     }

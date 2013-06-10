@@ -43,7 +43,7 @@
             "path": "cordova-2.7.0.js"
         },
         {
-            "path": "webintent.js"
+            "path": "EmailComposer.js"
         },
         {
             "path": "touch/sencha-touch-all.js",
