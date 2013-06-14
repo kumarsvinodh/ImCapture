@@ -39,6 +39,10 @@
      *      }
      */
     "js": [
+    
+    	{
+            "path": "jspdf.source.js"
+        },
     	{
             "path": "cordova-2.7.0.js"
         },

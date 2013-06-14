@@ -93,3 +93,10 @@ window.plugins.emailComposer.showEmailComposer(subject,body,toRecipients,ccRecip
         ]
     }
 });
+
+David,
+
+Good Morning. I am trying to get git access, seems I need to know/have public key for my username. Can you point me the right direction for this?
+
+Thanks,
+Vinodh

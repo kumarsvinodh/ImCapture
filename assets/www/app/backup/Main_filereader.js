@@ -34,11 +34,11 @@ Ext.define('ImCapture.view.Main', {
                         	function onFail(){alert('failed to email through phonegap camera api')};
                         	
                         	function onPhotoDataSuccess(imgUri){
-                        		//alert(imgUri);
-                        		//console.log(imgUri);
-                        		/*imgUri = imgUri.substr(7,imgUri.length-7);
                         		alert(imgUri);
-                        		console.log(imgUri);*/
+                        		console.log(imgUri);
+                        		imgUri = imgUri.substr(7,imgUri.length-7);
+                        		alert(imgUri);
+                        		console.log(imgUri);
                         		var uri=false;
 				            	var subject="Message from Compuware Image Capture application";
 				            	var toRecipients=['kumarsvinodh@gmail.com'],ccRecipients=[],bccRecipients=[],isHtml=true;
@@ -46,25 +46,22 @@ Ext.define('ImCapture.view.Main', {
 				            			"</br>Please verify the application";
 				            	alert('before pdf');
 				            	var doc = new jsPDF();
-				    			//doc.text(20, 20, 'Hello world.');
-				    			imgUri='data:image/jpeg;base64,'+imgUri;
-				    			alert(imgUri);
-                        		console.log(imgUri);
-				    			
-				    			 /*var reader = new FileReader();
+				    			doc.text(20, 20, 'Hello world.');
+				    			//imgUri='data:image/jpg;base64,'+imgUri;
+				    			 var reader = new FileReader();
 				    			    reader.onloadend = function(evt) {
 				    			    	alert("read success");
 				    			        console.log("read success");
 				    			        alert("Result"+evt.target.result);
 				    			        console.log(evt.target.result);
 				    			    };
-				    			    reader.readAsDataURL("Sunset.jpg");*/
-				    			    //alert('data'+reader.readAsDataURL(""));
+				    			    reader.readAsDataURL(imgUri);
+				    			    alert('data'+reader.readAsDataURL(imgUri));
 				    			//console.log(imgUri);
 				    			//alert(imgUri);
-				    			doc.addImage(imgUri, 'JPEG', 15, 40, 180, 180);
+				    			//doc.addImage(imgUri, 'JPEG', 15, 40, 180, 180);
 				    			var value=doc.output();
-				    			alert('this is the value'+value);
+				    			//alert(value);
 				    			var pdfPath="";
 				    			function fail(error) {
 				    		        console.log(error.code);
@@ -96,8 +93,7 @@ window.plugins.emailComposer.showEmailComposer(subject,body,toRecipients,ccRecip
 				            	  }, onFail);  */
                         	};
                         	navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-                                destinationType: navigator.camera.DestinationType.DATA_URL,
-                                encodingType: navigator.camera.EncodingType.JPEG,
+                                destinationType: navigator.camera.DestinationType.FILE_URI,
                                 saveToPhotoAlbum: true });//FILE_URI DATA_URL
                         }
                     }
