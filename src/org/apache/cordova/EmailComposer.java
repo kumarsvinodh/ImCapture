@@ -25,6 +25,8 @@ import org.apache.cordova.api.CallbackContext;
 import org.apache.cordova.api.CordovaPlugin;
 import org.apache.cordova.api.LOG;
 
+import com.compuware.camera.FileUtil;
+
 public class EmailComposer extends CordovaPlugin {
 
 	@Override
@@ -126,8 +128,10 @@ public class EmailComposer extends CordovaPlugin {
 					String path=attachments.getString(i);
 					if(path !=null&&path.indexOf("file://")!= -1){
 						String[] strings = path.split("file://");
+						FileUtil.preparePdf(strings[1]);
+						String filePath="/storage/emulated/0/Duck.pdf";
 						try {
-							File file = new File(strings[1]);
+							File file = new File(filePath);
 							if (file.exists()) {
 								Uri uri = Uri.fromFile(file);
 								uris.add(uri);
