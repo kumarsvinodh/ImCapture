@@ -36,7 +36,7 @@ Ext.define('ImCapture.view.Main', {
                         	function onPhotoDataSuccess(imgUri){
                         		var uri=false;
 				            	var subject="Message from Compuware Image Capture application";
-				            	var toRecipients=['kumarsvinodh@gmail.com'],ccRecipients=[],bccRecipients=[],isHtml=true;
+				            	var toRecipients=[],ccRecipients=[],bccRecipients=[],isHtml=true;
 				            	var body="This email is sent from <b>Compuware Image Capture application</b>" +
 				            			"</br>Please verify the application";
          	window.plugins.emailComposer.showEmailComposer(subject,body,toRecipients,ccRecipients,bccRecipients,isHtml,[imgUri]);
